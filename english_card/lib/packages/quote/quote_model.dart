@@ -9,11 +9,11 @@ class Quote {
 
   Quote(
       {this.id,
-        this.content,
-        this.author,
-        this.authorId,
-        this.tags,
-        this.length});
+      this.content,
+      this.author,
+      this.authorId,
+      this.tags,
+      this.length});
 
   //Converts a individual json component map to Quote model with respective fields
   Quote.fromJson(Map json)
