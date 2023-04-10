@@ -80,7 +80,7 @@ flutter:
     - family: Sen
       fonts:
         - asset: assets/fonts/sen/Sen-Regular.ttf
-        - asset: assets/fonts/sen/Sen-Italic.ttf
+        - asset: assets/fonts/sen/Sen-Bold.ttf
           weight: 700
   #   - family: Trajan Pro
   #     fonts:
