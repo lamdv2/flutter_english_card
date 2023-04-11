@@ -11,7 +11,6 @@ class Quotes {
 
   factory Quotes() => _instance;
   getAll() {
-    // datas = await compute(convert, allquotes);
     datas = allquotes.map((e) => Quote.fromJson(e)).toList();
   }
 
@@ -29,7 +28,7 @@ class Quotes {
   }
 
   int _getRandomIndex() {
-    return new Random.secure().nextInt(allquotes.length);
+    return Random.secure().nextInt(allquotes.length);
   }
 
   Quote getRandom() {

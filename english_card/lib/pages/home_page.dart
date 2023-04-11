@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:english_card/packages/quote/quote.dart';
 import 'package:english_card/values/app_assets.dart';
 import 'package:english_card/values/app_colors.dart';
 import 'package:english_card/values/app_styles.dart';
@@ -7,6 +8,8 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 
 import '../models/english_today.dart';
+import '../packages/quote/quote_model.dart';
+import '../widgets/app_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -20,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   late final PageController _pageController = PageController();
 
   List<EnglishToday> words = [];
+  String? quote;
 
   List<int> fixedListRandom({int len = 1, int max = 200, int min = 1}) {
     if (len > max || len < min) {
@@ -42,12 +46,23 @@ class _HomePageState extends State<HomePage> {
 
   getEnglishToday() {
     List<String> getList = [];
-    List<int> rans = fixedListRandom(len: 5, max: nouns.length);
-    rans.forEach((element) {
+    List<int> randoms = fixedListRandom(len: 5, max: nouns.length);
+    randoms.forEach((element) {
       getList.add(nouns[element]);
     });
 
-    words = getList.map((e) => EnglishToday(noun: e)).toList();
+    words = getList.map((e) => getWords(e)).toList();
+    quote = Quotes().getRandom().content;
+  }
+
+  EnglishToday getWords(noun){
+    Quote? quote;
+    quote = Quotes().getByWord(noun);
+    return EnglishToday(
+      noun: noun,
+      quote: quote?.content ?? '"Think of all the beauty still left around you and be happy"',
+      id: quote?.id,
+    );
   }
 
   @override
@@ -75,7 +90,11 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
+        onPressed: () {
+          setState(() {
+            getEnglishToday();
+          });
+        },
         backgroundColor: AppColors.primaryColor,
         child: Image.asset(AppAssets.exchange),
       ),
@@ -90,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
-                  '"It is amazing It is amazing It is amazing It is amazing It is amazing "',
+                  '"$quote"',
                   style: AppStyles.h5.copyWith(color: AppColors.textColor),
                 ),
               ),
@@ -106,9 +125,9 @@ class _HomePageState extends State<HomePage> {
                   },
                   itemCount: words.length,
                   itemBuilder: (context, index) {
-                    String firstLetter = words[index].noun != null ? words[index].noun! : '';
+                    String firstLetter = words[index].noun ?? '';
                     firstLetter = firstLetter.substring(0,1).toUpperCase();
-                    String leftLetter = words[index].noun != null ? words[index].noun! : '';
+                    String leftLetter = words[index].noun ?? '';
                     leftLetter = leftLetter.substring(1, leftLetter.length);
 
                     return Container(
@@ -169,9 +188,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 38.0),
+                            padding: const EdgeInsets.only(top: 48.0),
                             child: Text(
-                              '"Think of all the beauty still left around you and be happy"',
+                              words[index].quote != null ? '"${words[index].quote}"' : "Think of all the beauty still left around you and be happy",
                               style: AppStyles.h4.copyWith(
                                   letterSpacing: .6,
                                   color: AppColors.textColor),
@@ -196,6 +215,40 @@ class _HomePageState extends State<HomePage> {
                   },
                 ),
               ),
+            ],
+          ),
+        ),
+      ),
+      drawer: Drawer(
+        child: Container(
+          color: AppColors.lightBlue,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 24, left: 16),
+                child: Text(
+                  'Your mind',
+                  style: AppStyles.h3.copyWith(color: AppColors.textColor),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: AppButton(
+                    label: 'Favorites',
+                    onTap: () {
+                      print('Favorites');
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 24),
+                child: AppButton(
+                    label: 'Your control',
+                    onTap: () {
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (_) => ControlPage()));
+                    }),
+              )
             ],
           ),
         ),
