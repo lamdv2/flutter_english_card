@@ -6,8 +6,11 @@ import '../values/app_styles.dart';
 class AppButton extends StatelessWidget {
   final String label;
   final VoidCallback onTap;
+  final double? widthBtn;
+  final AlignmentGeometry? alignmentGeometry;
 
-  const AppButton({Key? key, required this.label, required this.onTap})
+  const AppButton(
+      {Key? key, required this.label, required this.onTap, this.widthBtn, this.alignmentGeometry})
       : super(key: key);
 
   @override
@@ -17,16 +20,18 @@ class AppButton extends StatelessWidget {
         onTap();
       },
       child: Container(
-        width: double.infinity,
+        width: widthBtn ?? double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 16),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
         decoration: const BoxDecoration(
-            color: Colors.white,
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black26, offset: Offset(3, 6), blurRadius: 6)
-            ],
-            borderRadius: BorderRadius.all(Radius.circular(8))),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black26, offset: Offset(3, 6), blurRadius: 6)
+          ],
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        alignment: alignmentGeometry ?? Alignment.centerLeft,
         child: Text(
           label,
           style: AppStyles.h5.copyWith(color: AppColors.textColor),

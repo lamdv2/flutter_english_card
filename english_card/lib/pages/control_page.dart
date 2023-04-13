@@ -1,4 +1,5 @@
 import 'package:english_card/values/shared_key.dart';
+import 'package:english_card/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../values/app_assets.dart';
@@ -23,7 +24,7 @@ class _ControlPageState extends State<ControlPage> {
     initDefaultValue();
   }
 
-  initDefaultValue() async{
+  initDefaultValue() async {
     preferences = await SharedPreferences.getInstance();
     int value = preferences.getInt(SharedKey.counter) ?? 5;
     setState(() {
@@ -44,9 +45,11 @@ class _ControlPageState extends State<ControlPage> {
         ),
         elevation: 1,
         leading: InkWell(
-          onTap: () async{
-            SharedPreferences preferences = await SharedPreferences.getInstance();
-            await preferences.setInt(SharedKey.counter, currentSliderValue.toInt());
+          onTap: () async {
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            await preferences.setInt(
+                SharedKey.counter, currentSliderValue.toInt());
             // ignore: use_build_context_synchronously
             Navigator.pop(context);
           },
@@ -101,6 +104,20 @@ class _ControlPageState extends State<ControlPage> {
                   color: AppColors.textColor,
                 ),
               ),
+            ),
+            const Spacer(),
+            AppButton(
+              label: 'OK',
+              alignmentGeometry: Alignment.center,
+              widthBtn: size.width * 1 / 3,
+              onTap: () async {
+                SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
+                await preferences.setInt(
+                    SharedKey.counter, currentSliderValue.toInt());
+                // ignore: use_build_context_synchronously
+                Navigator.pop(context);
+              },
             ),
             const Spacer(),
             const Spacer(),

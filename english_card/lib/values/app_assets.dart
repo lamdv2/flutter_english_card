@@ -5,4 +5,5 @@ class AppAssets {
   static const String leftArrow = '${imagePath}left_arrow.png';
   static const String menu = '${imagePath}menu.png';
   static const String rightArrow = '${imagePath}right_arrow.png';
+  static const String favoritesHeart = '${imagePath}favorites_heart.png';
 }
