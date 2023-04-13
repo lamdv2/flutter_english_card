@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:english_card/packages/quote/quote.dart';
+import 'package:english_card/pages/all_words_page.dart';
 import 'package:english_card/values/app_assets.dart';
 import 'package:english_card/values/app_colors.dart';
 import 'package:english_card/values/app_styles.dart';
@@ -287,7 +288,8 @@ class _HomePageState extends State<HomePage> {
         elevation: 4,
         child: InkWell(
           onTap: () {
-
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => AllWordsPage(words: words)));
           },
           splashColor: Colors.black26,
           borderRadius: BorderRadius.circular(24),
