@@ -186,6 +186,7 @@ class _HomePageState extends State<HomePage> {
                                       words[index].isFavorite =
                                           !words[index].isFavorite;
                                     });
+                                    return words[index].isFavorite;
                                   },
                                   isLiked: words[index].isFavorite,
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -321,9 +322,12 @@ class _HomePageState extends State<HomePage> {
         color: AppColors.primaryColor,
         elevation: 4,
         child: InkWell(
-          onTap: () {
-            Navigator.push(context,
+          onTap: () async{
+            words = await Navigator.push(context,
                 MaterialPageRoute(builder: (_) => AllWordsPage(words: words)));
+            setState(() {
+              words;
+            });
           },
           splashColor: Colors.black26,
           borderRadius: BorderRadius.circular(24),
