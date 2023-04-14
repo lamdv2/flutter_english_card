@@ -9,6 +9,7 @@ import 'package:english_card/values/shared_key.dart';
 import 'package:english_card/widgets/drawer.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/english_today.dart';
@@ -69,10 +70,10 @@ class _HomePageState extends State<HomePage> {
     Quote? quote;
     quote = Quotes().getByWord(noun);
     return EnglishToday(
+      id: quote?.id,
       noun: noun,
       quote: quote?.content ??
-          '"Think of all the beauty still left around you and be happy"',
-      id: quote?.id,
+          'Think of all the beauty still left around you and be happy',
     );
   }
 
@@ -83,8 +84,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool checkIconHeart = true;
-  Widget iconHeart = Image.asset(AppAssets.heart);
 
   @override
   Widget build(BuildContext context) {
@@ -134,105 +133,140 @@ class _HomePageState extends State<HomePage> {
               Container(
                 height: size.height * 2 / 3,
                 alignment: Alignment.center,
-                child: GestureDetector(
-                  onDoubleTap: () {
+                child: PageView.builder(
+                  controller: _pageController,
+                  onPageChanged: (index) {
                     setState(() {
-                      if (checkIconHeart) {
-                        iconHeart = Image.asset(AppAssets.heart);
-                        checkIconHeart = !checkIconHeart;
-                      } else {
-                        iconHeart = Image.asset(AppAssets.favoritesHeart);
-                        checkIconHeart = !checkIconHeart;
-                      }
+                      _currentIndex = index;
                     });
                   },
-                  child: PageView.builder(
-                    controller: _pageController,
-                    onPageChanged: (index) {
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
-                    itemCount: words.length,
-                    itemBuilder: (context, index) {
-                      String firstLetter = words[index].noun ?? '';
-                      firstLetter = firstLetter.substring(0, 1).toUpperCase();
-                      String leftLetter = words[index].noun ?? '';
-                      leftLetter = leftLetter.substring(1, leftLetter.length);
+                  itemCount: words.length,
+                  itemBuilder: (context, index) {
+                    String firstLetter = words[index].noun ?? '';
+                    firstLetter = firstLetter.substring(0, 1).toUpperCase();
+                    String leftLetter = words[index].noun ?? '';
+                    leftLetter = leftLetter.substring(1, leftLetter.length);
 
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
+                      decoration: const BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            offset: Offset(2, 4),
+                            blurRadius: 6,
+                            color: Colors.black26,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.all(Radius.circular(14)),
+                      ),
+                      child: Material(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(16),
+                        elevation: 4,
+                        child: InkWell(
+                          onDoubleTap: () {
+                            setState(() {
+                              words[index].isFavorite =
+                                  !words[index].isFavorite;
+                            });
+                          },
+                          splashColor: Colors.black26,
                           borderRadius: BorderRadius.circular(16),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black26,
-                              blurRadius: 6,
-                              offset: Offset(2, 4),
-                            ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.all(16),
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              alignment: Alignment.centerRight,
-                              child: iconHeart,
-                            ),
-                            RichText(
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              text: TextSpan(
-                                text: firstLetter,
-                                style: const TextStyle(
-                                  fontFamily: FontFamily.sen,
-                                  fontSize: 70,
-                                  fontWeight: FontWeight.bold,
-                                  shadows: [
-                                    BoxShadow(
-                                      color: Colors.black38,
-                                      offset: Offset(3, 6),
-                                      blurRadius: 10,
-                                    )
-                                  ],
+                          child: AnimatedContainer(
+                            padding: const EdgeInsets.all(16),
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.bounceOut,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                LikeButton(
+                                  onTap: (isLiked) async {
+                                    setState(() {
+                                      words[index].isFavorite =
+                                          !words[index].isFavorite;
+                                    });
+                                  },
+                                  isLiked: words[index].isFavorite,
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  size: 40,
+                                  circleColor: const CircleColor(
+                                      start: Color(0xff00ddff),
+                                      end: Color(0xff0099cc)),
+                                  bubblesColor: const BubblesColor(
+                                    dotPrimaryColor: Color(0xff33b5e5),
+                                    dotSecondaryColor: Color(0xff0099cc),
+                                  ),
+                                  likeBuilder: (bool isLiked) {
+                                    return ImageIcon(
+                                      const AssetImage(AppAssets.heart),
+                                      color:
+                                          isLiked ? Colors.red : Colors.white,
+                                      size: 40,
+                                    );
+                                  },
                                 ),
-                                children: [
-                                  TextSpan(
-                                    text: leftLetter,
+                                // Container(
+                                //   alignment: Alignment.centerRight,
+                                //   child: Image.asset(
+                                //     AppAssets.heart,
+                                //     color: words[index].isFavorite
+                                //         ? Colors.red
+                                //         : Colors.white,
+                                //   ),
+                                // ),
+                                RichText(
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  text: TextSpan(
+                                    text: firstLetter,
                                     style: const TextStyle(
                                       fontFamily: FontFamily.sen,
-                                      fontSize: 36,
-                                      fontWeight: FontWeight.normal,
+                                      fontSize: 70,
+                                      fontWeight: FontWeight.bold,
                                       shadows: [
                                         BoxShadow(
                                           color: Colors.black38,
                                           offset: Offset(3, 6),
-                                          blurRadius: 9,
+                                          blurRadius: 10,
                                         )
                                       ],
                                     ),
-                                  )
-                                ],
-                              ),
+                                    children: [
+                                      TextSpan(
+                                        text: leftLetter,
+                                        style: const TextStyle(
+                                          fontFamily: FontFamily.sen,
+                                          fontSize: 36,
+                                          fontWeight: FontWeight.normal,
+                                          shadows: [
+                                            BoxShadow(
+                                              color: Colors.black38,
+                                              offset: Offset(3, 6),
+                                              blurRadius: 9,
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 48.0),
+                                  child: AutoSizeText(
+                                    '"${words[index].quote}"',
+                                    style: AppStyles.h4.copyWith(
+                                        letterSpacing: .6,
+                                        color: AppColors.textColor),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 48.0),
-                              child: AutoSizeText(
-                                words[index].quote != null
-                                    ? '"${words[index].quote}"'
-                                    : "Think of all the beauty still left around you and be happy",
-                                style: AppStyles.h4.copyWith(
-                                    letterSpacing: .6,
-                                    color: AppColors.textColor),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
               ),
               _currentIndex >= 5
