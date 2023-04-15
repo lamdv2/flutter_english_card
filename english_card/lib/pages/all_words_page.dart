@@ -97,8 +97,7 @@ class _AllWordsPageState extends State<AllWordsPage> {
                                   index: index,
                                 )));
                     setState(() {
-                      widget.words[index];
-                      index;
+                      widget.words;
                     });
                   },
                 ),
