@@ -21,8 +21,8 @@ Short of feature: Favorites
 ## Photos
 
 <p align="center">
-  <img src="/assets/images/show_img/landing.png" width="200" hspace="20">
-  <img src="/assets/images/show_img/home.png" width="200" hspace="20">
+  <img src="/assets/images/show_img/landing.png" width="300" hspace="20">
+  <img src="/assets/images/show_img/home.png" width="300" hspace="20">
 </p>
 
 <p align="center">
