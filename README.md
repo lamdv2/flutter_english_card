@@ -26,16 +26,16 @@ Short of feature: Favorites
 </p>
 
 <p align="center">
-  <img src="/assets/images/show_img/home_favorite.png" width="400" hspace="20">
-  <img src="/assets/images/show_img/show_more.png" width="400" hspace="20">
+  <img src="/assets/images/show_img/home_favorite.png" width="300" hspace="20">
+  <img src="/assets/images/show_img/show_more.png" width="300" hspace="20">
 </p>
 
 <p align="center">
-  <img src="/assets/images/show_img/list_words.png" width="400" hspace="20">
-  <img src="/assets/images/show_img/detail_word.png" width="400" hspace="20">
+  <img src="/assets/images/show_img/list_words.png" width="300" hspace="20">
+  <img src="/assets/images/show_img/detail_word.png" width="300" hspace="20">
 </p>
 
 <p align="center">
-  <img src="/assets/images/show_img/menu.png" width="400" hspace="20">
-  <img src="/assets/images/show_img/your_control.png" width="400" hspace="20">
+  <img src="/assets/images/show_img/menu.png" width="300" hspace="20">
+  <img src="/assets/images/show_img/your_control.png" width="300" hspace="20">
 </p>
