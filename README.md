@@ -2,15 +2,29 @@
 
 flutter app english card demo and design
 
-## Getting Started
+## Screens it contains:
 
-This project is a starting point for a Flutter application.
+=> Landing Page
 
-A few resources to get you started if this is your first Flutter project:
+=> Home Page
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+=> All words Page
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+=> Detail Page
+
+=> Control Page
+
+=> Favorites Page
+
+Short of feature: Favorites
+
+## Photos
+![Screen](/assets/images/show_img/landing.png)
+![Screen](/assets/images/show_img/home.png)
+![Screen](/assets/images/show_img/home_favorite.png)
+![Screen](/assets/images/show_img/show_more.png)
+![Screen](/assets/images/show_img/list_words.png)
+![Screen](/assets/images/show_img/detail_word.png)
+![Screen](/assets/images/show_img/menu.png)
+![Screen](/assets/images/show_img/your_control.png)
+
