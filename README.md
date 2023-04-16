@@ -19,7 +19,8 @@ flutter app english card demo and design
 Short of feature: Favorites
 
 ## Photos
-![Screen](/assets/images/show_img/landing.png, /assets/images/show_img/landing.png)
+<img src="/assets/images/show_img/landing.png" width="400" height="300">
+
 ![Screen](/assets/images/show_img/home.png)
 ![Screen](/assets/images/show_img/home_favorite.png)
 ![Screen](/assets/images/show_img/show_more.png)
